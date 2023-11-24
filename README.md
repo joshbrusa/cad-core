@@ -13,5 +13,3 @@ docker compose up --wait
 ```bash
 docker compose down
 ```
-
-test
