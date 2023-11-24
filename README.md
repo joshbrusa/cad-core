@@ -2,16 +2,8 @@
 
 The core api for cad.
 
-## To Start
+## List Commands
 
 ```bash
-docker compose up --wait
+task --list
 ```
-
-## To Stop
-
-```bash
-docker compose down
-```
-
-testing
