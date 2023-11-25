@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -C ./src -o ../bin/cad-core
+RUN CGO_ENABLED=0 GOOS=linux go build -o ../bin/cad-core
 
 FROM alpine
 

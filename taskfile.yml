@@ -1,0 +1,12 @@
+version: "3"
+
+tasks:
+  start:
+    desc: Start cad-core.
+    cmds:
+      - docker compose up --wait
+
+  stop:
+    desc: Stop cad-core.
+    cmds:
+      - docker compose down
