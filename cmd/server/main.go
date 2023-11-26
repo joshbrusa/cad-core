@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/joshbrusa/cad-core/internal/database"
 	"github.com/joshbrusa/cad-core/internal/logger"
 	"github.com/joshbrusa/cad-core/internal/server"
 )
@@ -8,6 +9,8 @@ import (
 func main() {
 	logger := logger.New()
 
-	server := server.New(logger)
+	database := database.New(logger)
+	server := server.New(logger, database)
+
 	server.Start()
 }

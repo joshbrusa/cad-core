@@ -1,7 +1,7 @@
 package database
 
-import "github.com/jackc/pgx"
+import "database/sql"
 
 type Database struct {
-	DB *pgx.Conn
+	DB *sql.DB
 }

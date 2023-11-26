@@ -4,7 +4,7 @@ tasks:
   start:
     desc: Start cad-core.
     cmds:
-      - docker compose up --wait
+      - docker compose up --build --wait
 
   stop:
     desc: Stop cad-core.

@@ -8,10 +8,12 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ../bin/cad-core
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/server ./cmd/server/main.go
 
 FROM alpine
 
-COPY --from=build /code/bin/cad-core .
+RUN apk --no-cache add curl
 
-CMD [ "/cad-core" ]
+COPY --from=build /code/bin/server .
+
+CMD [ "/server" ]

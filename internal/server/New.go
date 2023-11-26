@@ -4,13 +4,15 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joshbrusa/cad-core/internal/database"
 	"github.com/joshbrusa/cad-core/internal/logger"
 )
 
-func New(logger *logger.Logger) *Server {
+func New(slog *logger.Slog, database *database.Database) *Server {
 	return &Server{
-		Logger: logger,
-		Mux:    http.NewServeMux(),
-		Port:   os.Getenv("PORT"),
+		Slog:     slog,
+		Mux:      http.NewServeMux(),
+		Database: database,
+		Port:     os.Getenv("PORT"),
 	}
 }

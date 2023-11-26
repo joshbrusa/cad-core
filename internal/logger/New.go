@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-func New() *Logger {
-	return &Logger{
+func New() *Slog {
+	return &Slog{
 		slog.New(slog.NewJSONHandler(os.Stdout, nil)),
 	}
 }

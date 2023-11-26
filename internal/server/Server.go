@@ -3,11 +3,13 @@ package server
 import (
 	"net/http"
 
+	"github.com/joshbrusa/cad-core/internal/database"
 	"github.com/joshbrusa/cad-core/internal/logger"
 )
 
 type Server struct {
-	Logger *logger.Logger
-	Mux    *http.ServeMux
-	Port   string
+	Slog     *logger.Slog
+	Mux      *http.ServeMux
+	Database *database.Database
+	Port     string
 }

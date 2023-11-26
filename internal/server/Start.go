@@ -5,17 +5,19 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joshbrusa/cad-core/internal/handlers"
+	"github.com/joshbrusa/cad-core/internal/handler"
 )
 
 func (server *Server) Start() {
-	server.Mux.Handle("/", handlers.RootHandler())
+	handler := handler.New(server.Slog)
 
-	fmt.Println("server listening on port: ", server.Port)
+	server.Mux.Handle("/", handler.Root())
+
+	fmt.Println("server listening on port:", server.Port)
 	err := http.ListenAndServe(":"+server.Port, server.Mux)
 
 	if err != nil {
-		server.Logger.Error(err.Error())
+		server.Slog.Error(err.Error())
 		os.Exit(1)
 	}
 }

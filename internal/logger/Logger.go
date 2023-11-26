@@ -2,6 +2,6 @@ package logger
 
 import "log/slog"
 
-type Logger struct {
+type Slog struct {
 	*slog.Logger
 }

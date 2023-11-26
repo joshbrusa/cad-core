@@ -1,22 +1,33 @@
 package database
 
 import (
+	"database/sql"
+	"fmt"
 	"os"
 
-	"github.com/jackc/pgx"
+	"github.com/joshbrusa/cad-core/internal/logger"
+	_ "github.com/lib/pq"
 )
 
-func New() *Database {
-	config := pgx.ConnConfig{
-		Host:     os.Getenv("POSTGRES_HOST"),
-		User:     os.Getenv("POSTGRES_USER"),
-		Password: os.Getenv("POSTGRES_PASSWORD"),
-		Database: os.Getenv("POSTGRES_DB"),
+func New(slog *logger.Slog) *Database {
+	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("POSTGRES_HOST"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+	)
+
+	db, err1 := sql.Open("postgres", config)
+
+	if err1 != nil {
+		slog.Error(err1.Error())
+		os.Exit(1)
 	}
 
-	db, err := pgx.Connect(config)
+	err2 := db.Ping()
 
-	if err != nil {
+	if err2 != nil {
+		slog.Error(err2.Error())
 		os.Exit(1)
 	}
 
