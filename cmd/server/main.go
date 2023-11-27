@@ -1,16 +1,16 @@
 package main
 
 import (
-	"github.com/joshbrusa/cad-core/internal/database"
-	"github.com/joshbrusa/cad-core/internal/logger"
-	"github.com/joshbrusa/cad-core/internal/server"
+	"github.com/joshbrusa/cad-core/internal/databases"
+	"github.com/joshbrusa/cad-core/internal/loggers"
+	"github.com/joshbrusa/cad-core/internal/servers"
 )
 
 func main() {
-	logger := logger.New()
+	jsonLogger := loggers.NewJsonLogger()
 
-	database := database.New(logger)
-	server := server.New(logger, database)
+	postgres := databases.NewPostgres(jsonLogger)
+	httpServer := servers.NewHttpServer(jsonLogger, postgres)
 
-	server.Start()
+	httpServer.Start()
 }
