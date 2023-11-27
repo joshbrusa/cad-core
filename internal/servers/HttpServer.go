@@ -29,7 +29,7 @@ func NewHttpServer(JsonLogger *loggers.JsonLogger, database *databases.Postgres)
 func (httpServer *HttpServer) Start() {
 	rootHandler := handlers.NewRootHandler(httpServer.JsonLogger)
 
-	httpServer.Mux.Handle("/", rootHandler.Handler())
+	httpServer.Mux.Handle("/", rootHandler.Handle())
 
 	fmt.Println("server listening on port:", httpServer.Port)
 	err := http.ListenAndServe(":"+httpServer.Port, httpServer.Mux)

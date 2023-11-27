@@ -16,7 +16,7 @@ func NewRootHandler(jsonLogger *loggers.JsonLogger) *RootHandler {
 	}
 }
 
-func (rootHandler *RootHandler) Handler() http.Handler {
+func (rootHandler *RootHandler) Handle() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		rootHandler.JsonLogger.Info("handling root", "path", r.URL.Path)
 
