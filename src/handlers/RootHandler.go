@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/joshbrusa/cad-core/src/logger"
+	"github.com/joshbrusa/cad-http/src/logger"
 )
 
 type RootHandler struct {

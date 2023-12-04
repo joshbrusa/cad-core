@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/joshbrusa/cad-core/src/logger"
-	"github.com/joshbrusa/cad-core/src/postgres"
-	"github.com/joshbrusa/cad-core/src/server"
+	"github.com/joshbrusa/cad-http/src/logger"
+	"github.com/joshbrusa/cad-http/src/postgres"
+	"github.com/joshbrusa/cad-http/src/server"
 )
 
 func main() {

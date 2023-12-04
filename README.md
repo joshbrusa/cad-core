@@ -1,6 +1,6 @@
-# cad-core
+# cad-http
 
-The core api for cad.
+The http server for cad.
 
 ## List Commands
 

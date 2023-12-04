@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/joshbrusa/cad-core/src/logger"
+	"github.com/joshbrusa/cad-http/src/logger"
 	_ "github.com/lib/pq"
 )
 

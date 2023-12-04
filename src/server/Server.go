@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joshbrusa/cad-core/src/handlers"
-	"github.com/joshbrusa/cad-core/src/logger"
-	"github.com/joshbrusa/cad-core/src/postgres"
+	"github.com/joshbrusa/cad-http/src/handlers"
+	"github.com/joshbrusa/cad-http/src/logger"
+	"github.com/joshbrusa/cad-http/src/postgres"
 )
 
 type Server struct {

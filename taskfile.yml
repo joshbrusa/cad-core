@@ -2,11 +2,11 @@ version: "3"
 
 tasks:
   start:
-    desc: Start cad-core.
+    desc: Start cad-http.
     cmds:
       - docker compose up --build --wait
 
   stop:
-    desc: Stop cad-core.
+    desc: Stop cad-http.
     cmds:
       - docker compose down

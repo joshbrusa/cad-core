@@ -1,4 +1,4 @@
-module github.com/joshbrusa/cad-core
+module github.com/joshbrusa/cad-http
 
 go 1.21.1
 
