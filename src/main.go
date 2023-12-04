@@ -1,14 +1,30 @@
 package main
 
 import (
-	"github.com/joshbrusa/cad-http/src/logger"
-	"github.com/joshbrusa/cad-http/src/postgres"
-	"github.com/joshbrusa/cad-http/src/server"
+	"fmt"
+	"net/http"
+	"os"
+
+	"github.com/joshbrusa/cad-http/src/core"
+	"github.com/joshbrusa/cad-http/src/handler"
+	"github.com/joshbrusa/cad-http/src/router"
 )
 
 func main() {
-	logger := logger.NewLogger()
-	postgres := postgres.NewPostgres(logger)
-	server := server.NewServer(logger, postgres)
-	server.StartServer()
+	logger := core.NewLogger()
+	env := core.NewEnv(logger)
+	postgres := core.NewPostgres(logger, env)
+	mux := http.NewServeMux()
+	handler := handler.NewHandler(logger)
+	router := router.NewRouter(logger, mux, handler)
+
+	router.RouteRoute()
+
+	fmt.Println("server listening on port:", env.Port)
+	err := http.ListenAndServe(":"+env.Port, mux)
+
+	if err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
 }
