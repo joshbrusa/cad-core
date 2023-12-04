@@ -3,22 +3,22 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/joshbrusa/cad-core/internal/loggers"
+	"github.com/joshbrusa/cad-core/src/core"
 )
 
 type RootHandler struct {
-	JsonLogger *loggers.JsonLogger
+	Logger *core.Logger
 }
 
-func NewRootHandler(jsonLogger *loggers.JsonLogger) *RootHandler {
+func NewRootHandler(logger *core.Logger) *RootHandler {
 	return &RootHandler{
-		JsonLogger: jsonLogger,
+		Logger: logger,
 	}
 }
 
 func (rootHandler *RootHandler) Handle() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		rootHandler.JsonLogger.Info("handling root", "path", r.URL.Path)
+		rootHandler.Logger.Info("handling root", "path", r.URL.Path)
 
 		w.WriteHeader(http.StatusOK)
 	})

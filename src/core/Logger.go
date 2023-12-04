@@ -1,16 +1,16 @@
-package loggers
+package core
 
 import (
 	"log/slog"
 	"os"
 )
 
-type JsonLogger struct {
+type Logger struct {
 	*slog.Logger
 }
 
-func NewJsonLogger() *JsonLogger {
-	return &JsonLogger{
+func NewLogger() *Logger {
+	return &Logger{
 		slog.New(slog.NewJSONHandler(os.Stdout, nil)),
 	}
 }

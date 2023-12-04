@@ -8,12 +8,12 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/server ./cmd/server/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/httpServer ./cmd/httpServer/main.go
 
 FROM alpine
 
 RUN apk --no-cache add curl
 
-COPY --from=build /code/bin/server .
+COPY --from=build /code/bin/httpServer .
 
-CMD [ "/server" ]
+CMD [ "/httpServer" ]
