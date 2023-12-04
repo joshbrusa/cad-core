@@ -1,10 +1,14 @@
 package main
 
-import "github.com/joshbrusa/cad-core/src/core"
+import (
+	"github.com/joshbrusa/cad-core/src/logger"
+	"github.com/joshbrusa/cad-core/src/postgres"
+	"github.com/joshbrusa/cad-core/src/server"
+)
 
 func main() {
-	logger := core.NewLogger()
-	postgres := core.NewPostgres(logger)
-	server := core.NewServer(logger, postgres)
+	logger := logger.NewLogger()
+	postgres := postgres.NewPostgres(logger)
+	server := server.NewServer(logger, postgres)
 	server.Start()
 }

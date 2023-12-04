@@ -1,4 +1,4 @@
-package core
+package server
 
 import (
 	"fmt"
@@ -6,16 +6,18 @@ import (
 	"os"
 
 	"github.com/joshbrusa/cad-core/src/handlers"
+	"github.com/joshbrusa/cad-core/src/logger"
+	"github.com/joshbrusa/cad-core/src/postgres"
 )
 
 type Server struct {
-	Logger   *Logger
+	Logger   *logger.Logger
 	Mux      *http.ServeMux
-	Postgres *Postgres
+	Postgres *postgres.Postgres
 	Port     string
 }
 
-func NewServer(logger *Logger, postgres *Postgres) *Server {
+func NewServer(logger *logger.Logger, postgres *postgres.Postgres) *Server {
 	return &Server{
 		Logger:   logger,
 		Mux:      http.NewServeMux(),

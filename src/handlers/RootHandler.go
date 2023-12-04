@@ -3,14 +3,14 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/joshbrusa/cad-core/src/core"
+	"github.com/joshbrusa/cad-core/src/logger"
 )
 
 type RootHandler struct {
-	Logger *core.Logger
+	Logger *logger.Logger
 }
 
-func NewRootHandler(logger *core.Logger) *RootHandler {
+func NewRootHandler(logger *logger.Logger) *RootHandler {
 	return &RootHandler{
 		Logger: logger,
 	}

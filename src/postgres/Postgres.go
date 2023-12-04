@@ -1,10 +1,11 @@
-package core
+package postgres
 
 import (
 	"database/sql"
 	"fmt"
 	"os"
 
+	"github.com/joshbrusa/cad-core/src/logger"
 	_ "github.com/lib/pq"
 )
 
@@ -12,7 +13,7 @@ type Postgres struct {
 	DB *sql.DB
 }
 
-func NewPostgres(logger *Logger) *Postgres {
+func NewPostgres(logger *logger.Logger) *Postgres {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
 		os.Getenv("POSTGRES_HOST"),
 		os.Getenv("POSTGRES_USER"),
