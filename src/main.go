@@ -10,5 +10,5 @@ func main() {
 	logger := logger.NewLogger()
 	postgres := postgres.NewPostgres(logger)
 	server := server.NewServer(logger, postgres)
-	server.Start()
+	server.StartServer()
 }
