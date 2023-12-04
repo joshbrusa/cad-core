@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/joshbrusa/cad-http/src/core"
-	"github.com/joshbrusa/cad-http/src/handler"
-	"github.com/joshbrusa/cad-http/src/router"
 )
 
 func main() {
@@ -19,14 +17,14 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	postgres := core.NewPostgres(logger, env)
-	handler := handler.NewHandler(logger)
-	router := router.NewRouter(logger, mux, handler)
+	// postgres := core.NewPostgres(logger, env)
+	// handler := handler.NewHandler(logger)
+	// router := router.NewRouter(logger, mux, handler)
 
-	router.RouteRoute()
+	// router.RouteRoute()
 
-	fmt.Println("server listening on port:", "8000")
-	listenErr := http.ListenAndServe(":"+"8000", mux)
+	fmt.Println("server listening on port:", env.Port)
+	listenErr := http.ListenAndServe(":"+env.Port, mux)
 
 	if listenErr != nil {
 		logger.Error(listenErr.Error())
