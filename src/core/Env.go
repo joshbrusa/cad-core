@@ -1,6 +1,9 @@
 package core
 
-import "os"
+import (
+	"errors"
+	"os"
+)
 
 type Env struct {
 	Port             string
@@ -10,40 +13,35 @@ type Env struct {
 	PostgresDb       string
 }
 
-func NewEnv(logger *Logger) *Env {
+func NewEnv(logger *Logger) (*Env, error) {
 	port, portOk := os.LookupEnv("PORT")
 
 	if !portOk {
-		logger.Error("missing environment variable: PORT")
-		os.Exit(1)
+		return nil, errors.New("missing environment variable: PORT")
 	}
 
 	postgresHost, postgresHostOk := os.LookupEnv("POSTGRES_HOST")
 
 	if !postgresHostOk {
-		logger.Error("missing environment variable: POSTGRES_HOST")
-		os.Exit(1)
+		return nil, errors.New("missing environment variable: POSTGRES_HOST")
 	}
 
 	postgresUser, postgresUserOk := os.LookupEnv("POSTGRES_USER")
 
 	if !postgresUserOk {
-		logger.Error("missing environment variable: POSTGRES_USER")
-		os.Exit(1)
+		return nil, errors.New("missing environment variable: POSTGRES_USER")
 	}
 
 	postgresPassword, postgresPasswordOk := os.LookupEnv("POSTGRES_PASSWORD")
 
 	if !postgresPasswordOk {
-		logger.Error("missing environment variable: POSTGRES_PASSWORD")
-		os.Exit(1)
+		return nil, errors.New("missing environment variable: POSTGRES_PASSWORD")
 	}
 
 	postgresDb, postgresDbOk := os.LookupEnv("POSTGRES_DB")
 
 	if !postgresDbOk {
-		logger.Error("missing environment variable: POSTGRES_DB")
-		os.Exit(1)
+		return nil, errors.New("missing environment variable: POSTGRES_DB")
 	}
 
 	return &Env{
@@ -52,5 +50,5 @@ func NewEnv(logger *Logger) *Env {
 		PostgresUser:     postgresUser,
 		PostgresPassword: postgresPassword,
 		PostgresDb:       postgresDb,
-	}
+	}, nil
 }
