@@ -3,7 +3,6 @@ package core
 import (
 	"database/sql"
 	"fmt"
-	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -12,7 +11,7 @@ type Postgres struct {
 	DB *sql.DB
 }
 
-func NewPostgres(logger *Logger, env *Env) *Postgres {
+func NewPostgres(env *Env, logger *Logger) (*Postgres, error) {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
 		env.PostgresHost,
 		env.PostgresUser,
@@ -23,18 +22,16 @@ func NewPostgres(logger *Logger, env *Env) *Postgres {
 	db, dbErr := sql.Open("postgres", config)
 
 	if dbErr != nil {
-		logger.Error(dbErr.Error())
-		os.Exit(1)
+		return nil, dbErr
 	}
 
 	pingErr := db.Ping()
 
 	if pingErr != nil {
-		logger.Error(pingErr.Error())
-		os.Exit(1)
+		return nil, dbErr
 	}
 
 	return &Postgres{
 		DB: db,
-	}
+	}, nil
 }
