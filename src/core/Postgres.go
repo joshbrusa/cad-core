@@ -19,14 +19,14 @@ func NewPostgres(env *Env, logger *Logger) (*Postgres, error) {
 		env.PostgresDb,
 	)
 
+	// db
 	db, dbErr := sql.Open("postgres", config)
-
 	if dbErr != nil {
 		return nil, dbErr
 	}
 
+	// ping
 	pingErr := db.Ping()
-
 	if pingErr != nil {
 		return nil, dbErr
 	}

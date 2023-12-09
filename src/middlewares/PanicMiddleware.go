@@ -9,12 +9,17 @@ import (
 )
 
 type PanicMiddleware struct {
-	Logger *core.Logger
+	Logger         *core.Logger
+	ResponseWriter *utils.ResponseWriter
 }
 
-func NewPanicMiddleware(logger *core.Logger) *PanicMiddleware {
+func NewPanicMiddleware(
+	logger *core.Logger,
+	responseWriter *utils.ResponseWriter,
+) *PanicMiddleware {
 	return &PanicMiddleware{
-		Logger: logger,
+		Logger:         logger,
+		ResponseWriter: responseWriter,
 	}
 }
 
@@ -27,19 +32,17 @@ func (panicMiddleware *PanicMiddleware) Handle(next http.Handler) http.Handler {
 				return
 			}
 
-			// log internal server error
-			msg := "internal server error"
-			slog.Error(msg)
-
-			// log message if string
+			// log message
 			recMsg, ok := rec.(string)
+
 			if ok {
 				slog.Error(recMsg)
+			} else {
+				slog.Error("internal server error")
 			}
 
 			// send response
-			response := utils.NewResponse(w, http.StatusInternalServerError, msg)
-			response.Send()
+			panicMiddleware.ResponseWriter.WriteCode(w, http.StatusInternalServerError)
 		}()
 		next.ServeHTTP(w, r)
 	})

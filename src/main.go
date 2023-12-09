@@ -8,6 +8,7 @@ import (
 	"github.com/joshbrusa/cad-http/src/handlers"
 	"github.com/joshbrusa/cad-http/src/middlewares"
 	"github.com/joshbrusa/cad-http/src/routers"
+	"github.com/joshbrusa/cad-http/src/utils"
 )
 
 func main() {
@@ -28,20 +29,25 @@ func main() {
 		return
 	}
 
+	// response writer
+	responseWriter := utils.NewResponseWriter(logger)
+
 	// middlewares
 	loggerMiddleware := middlewares.NewLoggerMiddleware(logger)
-	panicMiddleware := middlewares.NewPanicMiddleware(logger)
+	panicMiddleware := middlewares.NewPanicMiddleware(logger, responseWriter)
 
 	// handlers
-	defaultHandler := handlers.NewDefaultHandler(logger)
+	defaultHandler := handlers.NewDefaultHandler(logger, responseWriter)
 
-	// routers
+	// router
 	router := mux.NewRouter()
 
+	// default router
 	defaultRouter := routers.NewDefaultRouter(router)
 	defaultRouter.UseMiddlewares(loggerMiddleware, panicMiddleware)
 	defaultRouter.HandleRoutes(defaultHandler)
 
+	// user router
 	userRouter := routers.NewUserRouter(router)
 	userRouter.UseMiddlewares(loggerMiddleware, panicMiddleware)
 

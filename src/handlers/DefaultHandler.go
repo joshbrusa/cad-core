@@ -8,19 +8,22 @@ import (
 )
 
 type DefaultHandler struct {
-	Logger *core.Logger
+	Logger         *core.Logger
+	ResponseWriter *utils.ResponseWriter
 }
 
-func NewDefaultHandler(logger *core.Logger) *DefaultHandler {
+func NewDefaultHandler(
+	logger *core.Logger,
+	responseWriter *utils.ResponseWriter,
+) *DefaultHandler {
 	return &DefaultHandler{
-		Logger: logger,
+		Logger:         logger,
+		ResponseWriter: responseWriter,
 	}
 }
 
 func (defaultHandler *DefaultHandler) Handle() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		msg := "hello world"
-		response := utils.NewResponse(w, http.StatusOK, msg)
-		response.Send()
+		defaultHandler.ResponseWriter.WriteCode(w, http.StatusOK)
 	})
 }
