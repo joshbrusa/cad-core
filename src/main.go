@@ -3,30 +3,47 @@ package main
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/joshbrusa/cad-http/src/core"
+	"github.com/joshbrusa/cad-http/src/handlers"
+	"github.com/joshbrusa/cad-http/src/middlewares"
 	"github.com/joshbrusa/cad-http/src/routers"
 )
 
 func main() {
-	// get logger
+	// logger
 	logger := core.NewLogger()
 
-	// get env
+	// env
 	env, envErr := core.NewEnv(logger)
 	if envErr != nil {
 		logger.Error(envErr.Error())
 		return
 	}
 
-	// get postgres
-	postgres, postgresErr := core.NewPostgres(env, logger)
+	// postgres
+	_, postgresErr := core.NewPostgres(env, logger)
 	if postgresErr != nil {
 		logger.Error(postgresErr.Error())
 		return
 	}
 
-	// get router
-	router := routers.NewRouter(env, logger, postgres)
+	// middlewares
+	loggerMiddleware := middlewares.NewLoggerMiddleware(logger)
+	panicMiddleware := middlewares.NewPanicMiddleware(logger)
+
+	// handlers
+	defaultHandler := handlers.NewDefaultHandler(logger)
+
+	// routers
+	router := mux.NewRouter()
+
+	defaultRouter := routers.NewDefaultRouter(router)
+	defaultRouter.UseMiddlewares(loggerMiddleware, panicMiddleware)
+	defaultRouter.HandleRoutes(defaultHandler)
+
+	userRouter := routers.NewUserRouter(router)
+	userRouter.UseMiddlewares(loggerMiddleware, panicMiddleware)
 
 	// listen
 	logger.Info("server listening", "port", env.Port)

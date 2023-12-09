@@ -1,29 +1,24 @@
 package routers
 
 import (
-	"net/http"
-
-	"github.com/joshbrusa/cad-http/src/core"
+	"github.com/gorilla/mux"
+	"github.com/joshbrusa/cad-http/src/middlewares"
 )
 
 type UserRouter struct {
-	Env    *core.Env
-	Logger *core.Logger
-	Mux    *http.ServeMux
+	Router *mux.Router
 }
 
-func NewUserRouter(
-	env *core.Env,
-	logger *core.Logger,
-	mux *http.ServeMux,
-) *UserRouter {
+func NewUserRouter(router *mux.Router) *UserRouter {
 	return &UserRouter{
-		Env:    env,
-		Logger: logger,
-		Mux:    mux,
+		Router: router,
 	}
 }
 
-func (userRouter *UserRouter) Route() {
-	userRouter.Mux.HandleFunc("/", userRouter)
+func (userRouter *UserRouter) UseMiddlewares(
+	loggerMiddleware *middlewares.LoggerMiddleware,
+	panicMiddleware *middlewares.PanicMiddleware,
+) {
+	userRouter.Router.Use(loggerMiddleware.Handle)
+	userRouter.Router.Use(panicMiddleware.Handle)
 }
