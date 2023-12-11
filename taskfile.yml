@@ -10,3 +10,23 @@ tasks:
     desc: Stop cad-http.
     cmds:
       - docker compose down
+
+  logs-server:
+    desc: Follow server logs.
+    cmds:
+      - docker logs -f -n 1000 cad-http-server-1
+
+  logs-postgres:
+    desc: Follow postgres logs.
+    cmds:
+      - docker logs -f -n 1000 cad-http-postgres-1
+
+  slogs-server:
+    desc: Follow server logs parsed by jq.
+    cmds:
+      - docker logs -f -n 1000 cad-http-server-1 | jq -R 'try fromjson catch empty'
+
+  slogs-postgres:
+    desc: Follow postgres logs parsed by jq.
+    cmds:
+      - docker logs -f -n 1000 cad-http-postgres-1 | jq -R 'try fromjson catch empty'

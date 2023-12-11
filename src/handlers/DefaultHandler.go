@@ -1,19 +1,19 @@
 package handlers
 
 import (
+	"log/slog"
 	"net/http"
 
-	"github.com/joshbrusa/cad-http/src/core"
 	"github.com/joshbrusa/cad-http/src/utils"
 )
 
 type DefaultHandler struct {
-	Logger         *core.Logger
+	Logger         *slog.Logger
 	ResponseWriter *utils.ResponseWriter
 }
 
 func NewDefaultHandler(
-	logger *core.Logger,
+	logger *slog.Logger,
 	responseWriter *utils.ResponseWriter,
 ) *DefaultHandler {
 	return &DefaultHandler{

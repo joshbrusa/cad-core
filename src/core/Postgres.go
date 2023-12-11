@@ -3,6 +3,7 @@ package core
 import (
 	"database/sql"
 	"fmt"
+	"log/slog"
 
 	_ "github.com/lib/pq"
 )
@@ -11,7 +12,7 @@ type Postgres struct {
 	DB *sql.DB
 }
 
-func NewPostgres(env *Env, logger *Logger) (*Postgres, error) {
+func NewPostgres(env *Env, logger *slog.Logger) (*Postgres, error) {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
 		env.PostgresHost,
 		env.PostgresUser,

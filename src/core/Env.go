@@ -2,6 +2,7 @@ package core
 
 import (
 	"errors"
+	"log/slog"
 	"os"
 )
 
@@ -13,7 +14,7 @@ type Env struct {
 	PostgresDb       string
 }
 
-func NewEnv(logger *Logger) (*Env, error) {
+func NewEnv(logger *slog.Logger) (*Env, error) {
 	// port
 	port, portOk := os.LookupEnv("PORT")
 	if !portOk {

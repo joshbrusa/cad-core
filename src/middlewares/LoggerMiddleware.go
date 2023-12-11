@@ -1,16 +1,15 @@
 package middlewares
 
 import (
+	"log/slog"
 	"net/http"
-
-	"github.com/joshbrusa/cad-http/src/core"
 )
 
 type LoggerMiddleware struct {
-	Logger *core.Logger
+	Logger *slog.Logger
 }
 
-func NewLoggerMiddleware(logger *core.Logger) *LoggerMiddleware {
+func NewLoggerMiddleware(logger *slog.Logger) *LoggerMiddleware {
 	return &LoggerMiddleware{
 		Logger: logger,
 	}

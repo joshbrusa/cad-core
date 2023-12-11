@@ -4,17 +4,16 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/joshbrusa/cad-http/src/core"
 	"github.com/joshbrusa/cad-http/src/utils"
 )
 
 type PanicMiddleware struct {
-	Logger         *core.Logger
+	Logger         *slog.Logger
 	ResponseWriter *utils.ResponseWriter
 }
 
 func NewPanicMiddleware(
-	logger *core.Logger,
+	logger *slog.Logger,
 	responseWriter *utils.ResponseWriter,
 ) *PanicMiddleware {
 	return &PanicMiddleware{

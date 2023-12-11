@@ -2,16 +2,15 @@ package utils
 
 import (
 	"encoding/json"
+	"log/slog"
 	"net/http"
-
-	"github.com/joshbrusa/cad-http/src/core"
 )
 
 type ResponseWriter struct {
-	Logger *core.Logger
+	Logger *slog.Logger
 }
 
-func NewResponseWriter(logger *core.Logger) *ResponseWriter {
+func NewResponseWriter(logger *slog.Logger) *ResponseWriter {
 	return &ResponseWriter{
 		Logger: logger,
 	}
